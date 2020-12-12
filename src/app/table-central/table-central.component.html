@@ -1,1 +1,67 @@
-<p>table-central works!</p>
+<a target="_blank" href="{{path}}">open path with selected apartments</a>
+<table>
+  <thead>
+  <tr>
+    <th >City</th>
+    <th>Area</th>
+    <th>Address</th>
+    <th>Price</th>
+    <th>Add to path on the map</th>
+    <th>Original link</th>
+    <th>Original link</th>
+    <th>WhatsApp 1</th>
+    <th>WhatsApp 2</th>
+  </tr>
+  </thead>
+  
+  <tbody>
+  <tr
+    *ngFor="let apartment of apartments"
+  >
+  
+    <td class="flex items-center justify-between">
+      <span>{{apartment.city}}</span>
+      <a target="_blank" [href]="generateTamaLinkCity(apartment)">t38</a>
+    </td>
+    <td >{{apartment.area}}</td>
+    <td class="flex items-center justify-between">
+      <span>{{apartment.address}}</span>
+      <a target="_blank" [href]="generateTamaLinkAddress(apartment)">t38</a>
+    </td>
+    <td [style.color]="apartment.viaMakler?'red':''">{{apartment.price}}</td>
+  
+  
+    <td (click)="toggleApartmentInPath(apartment)">
+      <span *ngIf="!apartment.addToPath">add to path</span>
+      <span *ngIf="apartment.addToPath">remove from path</span>
+    </td>
+  
+    <td>
+      <a target="_blank" href="https://www.google.co.il/maps/dir//{{apartment.city}},{{apartment.address}}/">
+        open map
+      </a>
+    </td>
+    <td>
+      <a target="_blank" href="https://yad2.co.il/item/{{apartment.apartmentId}}">
+        open yad2
+      </a>
+    </td>
+    <td>
+      <a
+        target="_blank"
+        href="https://web.whatsapp.com/send?phone=+972{{apartment.sellerPhone1.replace('0', '')}}">
+        {{apartment.sellerPhone1}}
+      </a>
+    </td>
+    <td>
+      <a
+        *ngIf="apartment.sellerPhone2"
+        target="_blank"
+        href="https://web.whatsapp.com/send?phone=+972{{apartment.sellerPhone2.replace('0', '')}}">
+        {{apartment.sellerPhone2}}
+      </a>
+    </td>
+  </tr>
+  </tbody>
+  
+</table>
