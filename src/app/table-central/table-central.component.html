@@ -2,6 +2,7 @@
 <table>
   <thead>
   <tr>
+    <th ></th>
     <th >City</th>
     <th>Area</th>
     <th>Address</th>
@@ -18,7 +19,7 @@
   <tr
     *ngFor="let apartment of apartments"
   >
-  
+    <td>{{apartment.apartmentId }}</td>
     <td class="flex items-center justify-between">
       <span>{{apartment.city}}</span>
       <a target="_blank" [href]="generateTamaLinkCity(apartment)">t38</a>
