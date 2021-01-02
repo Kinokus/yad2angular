@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {TableCentralModule} from './table-central/table-central.module';
+import {TooltipModule} from 'ng2-tooltip-directive';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import {TableCentralModule} from './table-central/table-central.module';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        TableCentralModule
+        TableCentralModule,
+        TooltipModule
     ],
   providers: [],
   bootstrap: [AppComponent]

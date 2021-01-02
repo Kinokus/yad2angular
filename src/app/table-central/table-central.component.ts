@@ -7,19 +7,31 @@ import {TableCentralService} from './table-central.service';
     styleUrls: ['./table-central.component.scss']
 })
 export class TableCentralComponent implements OnInit {
-    public apartments: any;
-    public path: string;
+    apartments: any = [];
+    path: string;
+    cities: any = [];
+    hoods: any = [];
+    selectedCity: string = null;
+    selectedHood: string = null;
+    currentImage: string;
+    selectedImg: string;
 
     constructor(private tableCentralService: TableCentralService) {
     }
 
     async ngOnInit(): Promise<void> {
-        this.apartments = await this.tableCentralService.getApartments();
-        console.log(this.apartments);
+
+        this.cities = await this.tableCentralService.getCities();
+        // todo get by city and hood
+        // this.apartments = await this.tableCentralService.getApartments();
+        // console.log(this.apartments);
     }
 
     public generateTamaLinkAddress(apartment): string {
-        return `https://tama38.madlan.co.il/project/${apartment.address.replace(/ /gim, '_')}_${apartment.city.replace(/ /gim, '_')}`;
+        if (!apartment.street) {
+            return null;
+        }
+        return `https://tama38.madlan.co.il/project/${apartment.street.replace(/ /gim, '_')}_${apartment.homeNumber}_${apartment.city.replace(/ /gim, '_')}`;
     }
 
     public generateTamaLinkCity(apartment): string {
@@ -29,7 +41,7 @@ export class TableCentralComponent implements OnInit {
     public generatePath(): void {
         const adresses = this.apartments
             .filter(a => a.addToPath)
-            .map(a => `${a.city}, ${a.address}`)
+            .map(a => `${a.city}, ${a.street}, ${a.homeNumber} `)
             .join('/');
         this.path = `https://www.google.co.il/maps/dir/${adresses}`;
     }
@@ -38,4 +50,35 @@ export class TableCentralComponent implements OnInit {
         apartment.addToPath = !apartment.addToPath;
         this.generatePath();
     }
+
+    async getHoods(id): Promise<void> {
+        await this.getApartmentsByCityId(id);
+        this.hoods = await this.tableCentralService.getHoodsByCityId(id);
+        this.selectedCity = id;
+        this.selectedHood = null;
+
+    }
+
+    async getApartmentsByHoodId(id: string): Promise<void> {
+        this.apartments = await this.tableCentralService.getApartmentsByHoodId(id);
+        this.selectedHood = id;
+    }
+
+    async getApartmentsByCityId(id: string): Promise<void> {
+        this.apartments = await this.tableCentralService.getApartmentsByCityId(id);
+    }
+
+    sortBy(field): any {
+        return (a, b) => {
+            return a[field] < b[field] ? -1 : 1;
+        };
+    }
+
+    sortByStreet(): void {
+        this.apartments = this.apartments.sort(this.sortBy('street'));
+    }
+    sortByPrice(): void {
+        this.apartments = this.apartments.sort(this.sortBy('price'));
+    }
+
 }

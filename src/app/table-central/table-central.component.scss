@@ -1,12 +1,153 @@
+@import "../../assets/variables.scss";
+
 :host {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  //overflow: hidden;
+  @apply absolute top-0.5 left-0.5 right-0.5 bottom-0.5 border font-normal;
+
+}
+
+.table {
+  @apply text-left absolute top-0 left-0 right-0 bottom-0 flex flex-col overflow-hidden;
+  font-size: 12px;
+  padding: $base-grid;
+
+  .tooltip {
+    @apply bg-white rounded absolute;
+    display: block;
+    width: 300px;
+    height: auto;
+
+
+  }
+
+
+
+  .t-header, .t-row {
+
+    .t-col {
+      @apply w-1/12 text-left border-r ;
+      padding: $base-grid / 3;
+      padding-left: $base-grid;
+      padding-right: $base-grid;
+      width: 100px;
+
+      &.city {
+        width: 75px
+      }
+
+      &.hood {
+        width: 150px;
+      }
+
+      &.updated, &.added {
+        width: 100px;
+      }
+
+      &.images {
+        width: $base-grid * 4 * 5;
+        .image-counter {
+          &:hover{
+            @apply bg-blue-100;
+          }
+        }
+      }
+
+      &.address, &.seller {
+        width: 250px;
+        @apply flex justify-between overflow-hidden;
+
+        .text {
+          @apply overflow-ellipsis whitespace-nowrap flex-grow overflow-hidden
+        }
+
+        .path-toggle {
+          cursor: pointer;
+          @apply font-mono flex-shrink;
+        }
+
+        a {
+          @apply font-mono flex-shrink;
+          padding-left: $base-grid;
+        }
+      }
+
+      &.price,&.floor,&.rooms,&.meters {
+        width: 50px;
+        text-align: end;
+        .badge{
+          padding-inline-end: $base-grid;
+        }
+        &.makler {
+          @apply text-red-700
+        }
+      }
+
+      &.seller {
+        width: 150px;
+      }
+
+
+    }
+
+
+  }
+
+
+  .t-header {
+    @apply flex-initial border-b flex;
+    .t-col {
+      @apply w-auto
+    }
+  }
+
+  .t-body {
+    @apply flex-grow overflow-auto ;
+    .t-row {
+      &.makler{
+        @apply bg-red-50
+      }
+      @apply flex;
+      .t-col {
+        @apply font-light
+      }
+    }
+  }
 }
 
 
-
-
+//table {
+//  width: calc(100% - 0px);
+//
+//
+//  th, td {
+//    &.city {
+//      width: 10em;
+//      @apply font-mono
+//    }
+//  }
+//
+//
+//  thead {
+//    width: calc(100% - 1em);
+//    height: 8 * $base-grid;
+//    display: table;
+//    table-layout: fixed;
+//    th{
+//      @apply text-left
+//    }
+//  }
+//
+//  tbody {
+//    display: block;
+//    height: calc(100vh - #{ 8 * $base-grid});
+//    overflow: auto;
+//
+//    tr {
+//      display: table;
+//      width: 100%;
+//      table-layout: fixed;
+//
+//
+//    }
+//  }
+//
+//}
